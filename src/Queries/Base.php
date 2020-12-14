@@ -124,7 +124,7 @@ abstract class Base implements IteratorAggregate
      *
      * @param        $statement
      * @param string $separator - should be AND or OR
-     * @param array  $parameters
+     * @param array $parameters
      *
      * @return $this
      */
@@ -307,7 +307,7 @@ abstract class Base implements IteratorAggregate
     /**
      * Select an item as object
      *
-     * @param object|boolean $object  If set to true, items are returned as stdClass, otherwise a class
+     * @param object|boolean $object If set to true, items are returned as stdClass, otherwise a class
      *                                name can be passed and a new instance of this class is returned.
      *                                Can be set to false to return items as an associative array.
      *
@@ -496,8 +496,8 @@ abstract class Base implements IteratorAggregate
 
     /**
      * @param array $parameters
-     * @param int   $startTime
-     * @param int   $execTime
+     * @param int $startTime
+     * @param int $execTime
      *
      * @throws Exception
      */
@@ -531,7 +531,7 @@ abstract class Base implements IteratorAggregate
                 $this->currentFetchMode = PDO::FETCH_OBJ;
                 $result->setFetchMode($this->currentFetchMode);
             }
-        } elseif ($this->fluent->getPdo()->getAttribute(PDO::ATTR_DEFAULT_FETCH_MODE) === PDO::FETCH_BOTH) {
+        } else {
             $this->currentFetchMode = PDO::FETCH_ASSOC;
             $result->setFetchMode($this->currentFetchMode);
         }
