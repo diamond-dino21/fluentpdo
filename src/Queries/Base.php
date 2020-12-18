@@ -535,6 +535,8 @@ abstract class Base implements IteratorAggregate
         } elseif ($this->fluent->getPdo()->getAttribute(PDO::ATTR_DEFAULT_FETCH_MODE) === PDO::FETCH_BOTH) {
             $this->currentFetchMode = PDO::FETCH_ASSOC;
             $result->setFetchMode($this->currentFetchMode);
+        } else if ($this->object == true) {
+            $this->currentFetchMode = PDO::FETCH_ASSOC;
         }
     }
 
