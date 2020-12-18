@@ -18,22 +18,22 @@ class Select extends Common implements \Countable
     /**
      * SelectQuery constructor.
      *
-     * @param Query     $fluent
+     * @param Query $fluent
      * @param           $from
      */
     function __construct(Query $fluent, $from)
     {
         $clauses = [
-            'SELECT'   => ', ',
-            'FROM'     => null,
-            'JOIN'     => [$this, 'getClauseJoin'],
-            'WHERE'    => [$this, 'getClauseWhere'],
+            'SELECT' => ', ',
+            'FROM' => null,
+            'JOIN' => [$this, 'getClauseJoin'],
+            'WHERE' => [$this, 'getClauseWhere'],
             'GROUP BY' => ',',
-            'HAVING'   => ' AND ',
+            'HAVING' => ' AND ',
             'ORDER BY' => ', ',
-            'LIMIT'    => null,
-            'OFFSET'   => null,
-            "\n--"     => "\n--"
+            'LIMIT' => null,
+            'OFFSET' => null,
+            "\n--" => "\n--"
         ];
         parent::__construct($fluent, $clauses);
 
@@ -49,7 +49,7 @@ class Select extends Common implements \Countable
 
     /**
      * @param mixed $columns
-     * @param bool  $overrideDefault
+     * @param bool $overrideDefault
      *
      * @return $this
      */
@@ -87,9 +87,9 @@ class Select extends Common implements \Countable
      *
      * @param int $columnNumber
      *
+     * @return string
      * @throws Exception
      *
-     * @return string
      */
     public function fetchColumn(int $columnNumber = 0)
     {
@@ -104,11 +104,11 @@ class Select extends Common implements \Countable
      * Fetch first row or column
      *
      * @param string $column - column name or empty string for the whole row
-     * @param int    $cursorOrientation
-     *
-     * @throws Exception
+     * @param int $cursorOrientation
      *
      * @return mixed string, array or false if there is no row
+     * @throws Exception
+     *
      */
     public function fetch(?string $column = null, int $cursorOrientation = \PDO::FETCH_ORI_NEXT)
     {
@@ -118,6 +118,10 @@ class Select extends Common implements \Countable
 
         if ($this->result === false) {
             return false;
+        }
+
+        if (!$this->currentFetchMode) {
+            $this->currentFetchMode = \PDO::FETCH_OBJ;
         }
 
         $row = $this->result->fetch($this->currentFetchMode, $cursorOrientation);
@@ -144,9 +148,9 @@ class Select extends Common implements \Countable
      * @param $value
      * @param $object
      *
+     * @return array|\PDOStatement
      * @throws Exception
      *
-     * @return array|\PDOStatement
      */
     public function fetchPairs($key, $value, $object = false)
     {
@@ -159,12 +163,12 @@ class Select extends Common implements \Countable
 
     /** Fetch all row
      *
-     * @param string $index      - specify index column. Allows for data organization by field using 'field[]'
+     * @param string $index - specify index column. Allows for data organization by field using 'field[]'
      * @param string $selectOnly - select columns which could be fetched
      *
+     * @return array|bool -  fetched rows
      * @throws Exception
      *
-     * @return array|bool -  fetched rows
      */
     public function fetchAll($index = '', $selectOnly = '')
     {
@@ -196,9 +200,9 @@ class Select extends Common implements \Countable
     /**
      * \Countable interface doesn't break current select query
      *
+     * @return int
      * @throws Exception
      *
-     * @return int
      */
     public function count()
     {
@@ -208,9 +212,9 @@ class Select extends Common implements \Countable
     }
 
     /**
+     * @return \ArrayIterator|\PDOStatement
      * @throws Exception
      *
-     * @return \ArrayIterator|\PDOStatement
      */
     public function getIterator()
     {
