@@ -523,9 +523,7 @@ abstract class Base implements IteratorAggregate
      */
     private function setObjectFetchMode(PDOStatement $result): void
     {
-        if ($this->fluent->getPdo()->getAttribute(PDO::ATTR_DEFAULT_FETCH_MODE) == PDO::FETCH_OBJ) {
-            $result->setFetchMode(PDO::FETCH_OBJ);
-        }
+        $this->currentFetchMode = PDO::FETCH_OBJ;
         if ($this->object !== false) {
             if (class_exists($this->object)) {
                 $this->currentFetchMode = PDO::FETCH_CLASS;
