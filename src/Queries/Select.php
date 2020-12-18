@@ -185,7 +185,7 @@ class Select extends Common implements \Countable
                 if ($this->fluent->convertRead === true) {
                     return Utilities::stringToNumeric($result, $result->fetchAll());
                 } else {
-                    return $result->fetchAll();
+                    return $result->fetchAll($this->currentFetchMode);
                 }
             }
 
