@@ -120,10 +120,6 @@ class Select extends Common implements \Countable
             return false;
         }
 
-        if (!$this->currentFetchMode) {
-            $this->currentFetchMode = \PDO::FETCH_OBJ;
-        }
-
         $row = $this->result->fetch($this->currentFetchMode, $cursorOrientation);
 
         if ($this->fluent->convertRead === true) {
